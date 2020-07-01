@@ -27,7 +27,7 @@ namespace Function_read
             for (double i = a; i <= b; i += c)
             {
                 //Console.WriteLine("x={0}\ty={1}",i,f.f(i));
-                Console.WriteLine("x={0}\ty={1}", i, f(i,z));
+                Console.WriteLine("x={0}\ty={1}", i, f(i,z,0,z.Length-1));
             }
             Console.ReadKey();
         }
@@ -149,34 +149,20 @@ namespace Function_read
         }
         static double f(double x,int [] n,int i_start,int i_end)
         {
-            /*
-            1.поиск минимального
-              а.если минимальное <=-100, то отправляем эту скобочку на
-
-
-             
-            int answer = 0,min=n[0],imin=0;
-            for(int i=1;i<n.Length;i++)
-            {
-                if(n[i]<min)
-                {
-                    imin = i;
-                    min = n[imin];
-                }
-            }
-            if(min<=-100)
-            {//если есть скобочки
-                int k = 0;
-                for (int i = imin + 1; n[i] != min; i++) { k++; }
-                int[] a = new int[k];
-                for(int i=0;i<=k;i++)
-                {
-                    a[i] = n[i + imin+1];
-                }
-            }
-            */
             double answer = 0;
-            if (n[i_start] <= -100 && n[i_end] <= -100)
+            if (i_start < 0)
+            {//если первым действием - отрицательное число, например: -5+4х, то
+                //"-" в данном случае - действие: 0-5
+                answer = 0;
+            }
+            else if (i_start == i_end)
+            {
+                if (n[i_start] == -1)
+                    answer = x;
+                else
+                    answer = n[i_start];
+            }
+            else if (n[i_start] <= -100 && n[i_end] <= -100)
             {//если пришла функция в скобочках,
                 answer = f(x, n, i_start + 1, i_end - 1);//то обкусываем их
             }
@@ -188,7 +174,7 @@ namespace Function_read
                     if (n[i] <= -100)
                     {//игнорируем скобочки
                         int j = i + 1;
-                        while(n[i]!=n[j])
+                        while (n[i] != n[j])
                         {
                             j++;
                         }
