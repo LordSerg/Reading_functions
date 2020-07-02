@@ -89,6 +89,7 @@ namespace Function_read
                         a[i - k] = -10;
                     }
                     i += 2;
+                    k += 2;
                 }
                 else if(c[i]=='s'||c[i]=='S')
                 {//синус sin
@@ -96,6 +97,7 @@ namespace Function_read
                     length -= 2;
                     a[i - k] = -8;
                     i += 2;
+                    k += 2;
                 }
                 else if (c[i] == 't' || c[i] == 'T')
                 {//тангенс
@@ -105,12 +107,14 @@ namespace Function_read
                         length--;
                         a[i - k]=-9;
                         i++;
+                        k++;
                     }
                     else if(c[i+1]=='a')
                     {//tan
                         length-=2;
                         a[i - k] = -9;
-                        i+=2;
+                        i += 2;
+                        k += 2;
                     }
                 }
                 else if(c[i]=='(')
@@ -195,6 +199,14 @@ namespace Function_read
                     answer = f(x, n, i_start, imax - 1) / f(x, n, imax + 1, i_end);
                 else if (max == -6)
                     answer = Math.Pow(f(x, n, i_start, imax - 1), f(x, n, imax + 1, i_end));
+                else if (max == -7)
+                    answer = Math.Cos(f(x, n, imax + 1, i_end));
+                else if (max == -8)
+                    answer = Math.Sin(f(x, n, imax + 1, i_end));
+                else if (max == -9)
+                    answer = Math.Tan(f(x, n, imax + 1, i_end));
+                else if (max == -10)
+                    answer = 1/Math.Tan(f(x, n, imax + 1, i_end));
             }
             return answer;
         }
